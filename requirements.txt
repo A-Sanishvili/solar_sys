@@ -1,0 +1,5 @@
+pillow
+numpy
+pygame
+thorpy == 1.8.1
+
