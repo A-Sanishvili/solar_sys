@@ -28,11 +28,14 @@ scale_factor = 1
 def calculate_scale_factor(max_distance):
     """Вычисляет значение глобальной переменной **scale_factor** по данной характерной длине"""
     global scale_factor
-    scale_factor = 0.5*min(window_height, window_width)/max_distance
+    try:
+        scale_factor = 0.5*min(window_height, window_width)/max_distance
+    except ZeroDivisionError:
+        print('zero max_distance!')
     print('Scale factor:', scale_factor)
 
 
-def scale_x(x):
+def scale_x(x: float) -> int:
     """Возвращает экранную **x** координату по **x** координате модели.
     Принимает вещественное число, возвращает целое число.
     В случае выхода **x** координаты за пределы экрана возвращает
@@ -46,7 +49,7 @@ def scale_x(x):
     return int(x*scale_factor) + window_width//2
 
 
-def scale_y(y):
+def scale_y(y: float) -> int:
     """Возвращает экранную **y** координату по **y** координате модели.
     Принимает вещественное число, возвращает целое число.
     В случае выхода **y** координаты за пределы экрана возвращает
@@ -57,7 +60,8 @@ def scale_y(y):
 
     **y** — y-координата модели.
     """
-    pass  # FIXME
+    # FIXME
+    return int(-y*scale_factor) + window_height//2
 
 
 
@@ -85,9 +89,9 @@ class DrawableObject:
         self.obj = obj
 
     def draw(self, surface):
-        pygame.draw.circle(
+        pg.draw.circle(
             surface,
-            self.color,
-            (self.x, self.y),
-            self.R
+            self.obj.color,
+            (scale_x(self.obj.x), scale_y(self.obj.y)),
+            self.obj.R
         )  # FIXME
