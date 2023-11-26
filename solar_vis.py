@@ -85,4 +85,9 @@ class DrawableObject:
         self.obj = obj
 
     def draw(self, surface):
-            pass  # FIXME
+        pygame.draw.circle(
+            surface,
+            self.color,
+            (self.x, self.y),
+            self.R
+        )  # FIXME
